@@ -10,10 +10,12 @@ export const BR = {
 };
 
 export const PAISES = [
-  { label: 'Brasil', value: 'Brasil' },
+  { label: 'Alemanha', value: 'Alemanha'},
   { label: 'Argentina', value: 'Argentina' },
+  { label: 'Brasil', value: 'Brasil' },
   { label: 'Estados Unidos', value: 'Estados Unidos' },
-  { label: 'Inglaterra', value: 'Inglaterra' }
+  { label: 'França', value: 'França'},
+  { label: 'Inglaterra', value: 'Inglaterra'}
 ];
 
 export const SEXO_OPTIONS = [
@@ -21,4 +23,4 @@ export const SEXO_OPTIONS = [
   { label: 'Feminino', value: 'FEMININO' }
 ];
 
-export const DESAFIO_API = '';
+export const DESAFIO_API = 'https://desafiostefaninibackend.herokuapp.com';
