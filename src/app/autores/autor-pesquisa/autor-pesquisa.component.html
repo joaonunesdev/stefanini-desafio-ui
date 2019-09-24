@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1>Lista de Autores</h1>
+    </div>
+
+    <div class="ui-g-12">
+      <p-table
+        [value]="autores"
+        [paginator]="true"
+        [responsive]="true"
+        [rows]="filter.size"
+        [lazy]="true"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        (onLazyLoad)="onPageChange($event)"
+        selectionMode="single"
+        [(selection)]="autorSelecionado"
+        #table
+      >
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Data de Nascimento</th>
+          <th>Nacionalidade</th>
+          <th>E-mail</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-autor>
+        <tr [pSelectableRow]="autor" (click)="triggerRowSelection()">
+          <td>{{ autor.nome }}</td>
+          <td>{{ autor.cpf }}</td>
+          <td>{{ autor.dataNascimento | date: 'dd/MM/yyyy' : 'UTC' }}</td>
+          <td>{{ autor.paisOrigem }}</td>
+          <td>{{ autor.email }}</td>
+        </tr>
+      </ng-template>
+      </p-table>
+
+    </div>
+  </div>
+</div>

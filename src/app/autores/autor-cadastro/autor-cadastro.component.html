@@ -1,0 +1,169 @@
+<div class="container">
+  <form #autorForm="ngForm">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Cadastro</h1>
+      </div>
+
+      <div class="ui-g-12 ui-md-8 ui-fluid">
+        <label>Nome</label>
+        <input
+          pInputText
+          type="text"
+          name="nome"
+          #nome="ngModel"
+          [(ngModel)]="autor.nome"
+          required
+          minlength="3"
+        />
+        <app-message
+          [control]="nome"
+          error="required"
+          text="Informe o nome"
+        ></app-message>
+        <app-message
+          [control]="nome"
+          error="minlength"
+          text="Mínimo de {{
+            nome?.errors?.minlength?.requiredLength
+          }} caracteres"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label style="display: block;">Sexo</label>
+        <p-dropdown
+          [options]="sexoOptions"
+          placeholder="Selecione"
+          [showClear]="true"
+          name="sexo"
+          [(ngModel)]="autor.sexo"
+        ></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Data de Nascimento</label>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          [utc]="true"
+          [locale]="locale"
+          [inline]="false"
+          [readonlyInput]="false"
+          [showIcon]="false"
+          name="dataNascimento"
+          #dataNascimento="ngModel"
+          [(ngModel)]="data"
+          required
+        ></p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>CPF</label>
+        <p-inputMask
+          type="text"
+          mask="999.999.999-99"
+          name="cpf"
+          #cpf="ngModel"
+          [(ngModel)]="autor.cpf"
+          [required]="pais.value === 'Brasil'"
+        ></p-inputMask>
+        <p-message
+          severity="error"
+          text="Brasileiros devem informar o CPF"
+          *ngIf="pais.value === 'Brasil' && cpf.errors"
+        ></p-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Pais de Origem</label>
+        <p-dropdown
+          [options]="paises"
+          [autoWidth]="false"
+          placeholder="Selecione"
+          name="paisOrigem"
+          [(ngModel)]="autor.paisOrigem"
+          #pais="ngModel"
+          [filter]="true"
+          required
+        ></p-dropdown>
+        <app-message
+          [control]="pais"
+          error="required"
+          text="Informe o pais de origem"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>E-mail</label>
+        <input
+          pInputText
+          type="text"
+          name="email"
+          #email="ngModel"
+          [(ngModel)]="autor.email"
+          email
+        />
+        <app-message
+          [control]="email"
+          error="email"
+          text="E-mail inválido"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Obras</label>
+        <p-multiSelect
+          [options]="obras"
+          name="obrasDoAutor"
+          #obrasDoAutor
+          [(ngModel)]="autor.obras"
+          defaultLabel="Selecione"
+        ></p-multiSelect>
+      </div>
+
+      <div class="ui-g-12">
+        <div style="text-align: center;">
+          <button
+            label="Salvar"
+            pButton
+            [disabled]="autorForm.invalid"
+            (click)="onSave()"
+          ></button>
+          <button
+            label="Novo"
+            pButton
+            class="ui-button-secondary"
+            style="margin-left: 5px;"
+            (click)="onClear()"
+          ></button>
+          <button
+            [disabled]="autor.codigo == null"
+            label="Excluir"
+            pButton
+            class="ui-button-danger"
+            style="margin-left: 5px;"
+            (click)="showDeleteConfirmDialog()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <p-toast position="center" key="c" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onDelete()" label="Confirmar" class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onReject()" label="Cancelar" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+</div>

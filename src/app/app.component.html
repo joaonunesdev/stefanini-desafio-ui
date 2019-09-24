@@ -1,0 +1,11 @@
+<div style="text-align: center">
+  <p-selectButton
+    [options]="pages"
+    (onOptionClick)="navigate($event)"
+  ></p-selectButton>
+</div>
+
+<router-outlet></router-outlet>
+
+<app-toast></app-toast>
+

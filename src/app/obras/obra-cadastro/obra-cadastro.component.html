@@ -1,0 +1,172 @@
+<div class="container">
+  <form #obraForm="ngForm">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Cadastro</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input
+          pInputText
+          type="text"
+          name="nome"
+          #nome="ngModel"
+          [(ngModel)]="obra.nome"
+          required
+          minlength="3"
+        />
+        <app-message
+          [control]="nome"
+          error="required"
+          text="Informe o nome"
+        ></app-message>
+        <app-message
+          [control]="nome"
+          error="minlength"
+          text="Mínimo de {{
+            nome?.errors?.minlength?.requiredLength
+          }} caracteres"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Data de Publicação</label>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          [utc]="true"
+          [locale]="locale"
+          [inline]="false"
+          [readonlyInput]="false"
+          [showIcon]="false"
+          name="dataPublicacao"
+          #publicacao="ngModel"
+          [(ngModel)]="dataPublicacao"
+          [required]="dataExposicao == null"
+        ></p-calendar>
+        <app-message
+          [control]="publicacao"
+          error="required"
+          text="Informe a data de publicação da obra"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Data de Exposição</label>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          [utc]="true"
+          [locale]="locale"
+          [inline]="false"
+          [readonlyInput]="false"
+          [showIcon]="false"
+          name="dataExposicao"
+          #exposicao="ngModel"
+          [(ngModel)]="dataExposicao"
+          [required]="dataPublicacao == null"
+        ></p-calendar>
+        <app-message
+          [control]="exposicao"
+          error="required"
+          text="Informe a data de exposição da obra"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Autores</label>
+        <p-multiSelect
+          [options]="autores"
+          name="autoresDaObra"
+          #autoresDaObra=ngModel
+          [(ngModel)]="obra.autores"
+          defaultLabel="Selecione"
+          required
+        ></p-multiSelect>
+        <app-message
+          [control]="autoresDaObra"
+          error="required"
+          text="Selecione os autores da obra"
+        ></app-message>
+      </div>
+
+      <div class="ui-md-6"></div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label style="display: block;">Descrição</label>
+        <textarea style="width: 100%;"
+          rows="4"
+          pInputTextarea
+          name="descricao"
+          #descricao="ngModel"
+          [(ngModel)]="obra.descricao"
+          required
+          minlength="5"
+          maxlength="240"
+        ></textarea>
+        <app-message
+          [control]="descricao"
+          error="required"
+          text="Informe uma descrição"
+        ></app-message>
+        <app-message
+          [control]="descricao"
+          error="minlength"
+          text="Mínimo de {{
+            descricao?.errors?.minlength?.requiredLength
+          }} caracteres"
+        ></app-message>
+        <app-message
+          [control]="descricao"
+          error="maxlength"
+          text="Máximo de {{
+            descricao?.errors?.minlength?.requiredLength
+          }} caracteres"
+        ></app-message>
+      </div>
+
+      <div class="ui-g-12">
+        <div style="text-align: center;">
+          <button
+            label="Salvar"
+            pButton
+            [disabled]="obraForm.invalid"
+            (click)="onSave()"
+          ></button>
+          <button
+            label="Novo"
+            pButton
+            class="ui-button-secondary"
+            style="margin-left: 5px;"
+            (click)="onClear()"
+          ></button>
+          <button
+            [disabled]="obra.codigo == null"
+            label="Excluir"
+            pButton
+            class="ui-button-danger"
+            style="margin-left: 5px;"
+            (click)="showDeleteConfirmDialog()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <p-toast position="center" key="d" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onDelete()" label="Confirmar" class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onReject()" label="Cancelar" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+</div>

@@ -1,0 +1,2 @@
+<app-autor-cadastro #autorCadastro (saveEvent)="autorPesquisa.refreshTable()" (deleteEvent)="autorPesquisa.refreshTable()"></app-autor-cadastro>
+<app-autor-pesquisa #autorPesquisa (rowSelectionEvent)="autorCadastro.onAutorSelected($event)"></app-autor-pesquisa>

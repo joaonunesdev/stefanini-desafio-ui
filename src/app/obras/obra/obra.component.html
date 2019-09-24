@@ -1,0 +1,2 @@
+<app-obra-cadastro #obraCadastro (saveEvent)="obraPesquisa.refreshTable()" (deleteEvent)="obraPesquisa.refreshTable()"></app-obra-cadastro>
+<app-obra-pesquisa #obraPesquisa (rowSelectionEvent)="obraCadastro.onObraSelected($event)"></app-obra-pesquisa>

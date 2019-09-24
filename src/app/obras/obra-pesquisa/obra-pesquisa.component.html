@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="ui-g">
+    <form autocomplete="off" (ngSubmit)="search()">
+      <div class="ui-g-12">
+        <h1>Lista de Obras</h1>
+      </div>
+
+      <div class="ui-g-6 ui-fluid">
+        <label>Nome</label>
+        <input
+          type="text"
+          pInputText
+          name="nome"
+          ngModel
+          [(ngModel)]="filter.nome"
+        />
+      </div>
+
+      <div class="ui-g-6 ui-fluid">
+        <label>Descrição</label>
+        <input
+          type="text"
+          pInputText
+          name="descricao"
+          ngModel
+          [(ngModel)]="filter.descricao"
+        />
+      </div>
+      <div class="ui-g-12">
+        <button type="submit" label="Pesquisar" pButton></button>
+      </div>
+    </form>
+    <div class="ui-g-12">
+      <p-table
+        [value]="obras"
+        [paginator]="true"
+        [responsive]="true"
+        [rows]="filter.size"
+        [lazy]="true"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        (onLazyLoad)="onPageChange($event)"
+        selectionMode="single"
+        [(selection)]="obraSelecionada"
+        #table
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Data de Publicação</th>
+            <th>Data de Exposição</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-obra>
+          <tr [pSelectableRow]="obra" (click)="triggerRowSelection()">
+            <td>{{ obra.nome }}</td>
+            <td>{{ obra.dataPublicacao | date: "dd/MM/yyyy":"UTC" }}</td>
+            <td>{{ obra.dataExposicao | date: "dd/MM/yyyy":"UTC" }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
